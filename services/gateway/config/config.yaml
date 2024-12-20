@@ -1,0 +1,7 @@
+server:
+  port: "3000"
+
+services:
+  auth:
+    host : "auth"
+    port : "8080"

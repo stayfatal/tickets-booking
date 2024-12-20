@@ -1,0 +1,27 @@
+FROM golang:1.22-alpine3.20 AS builder
+
+WORKDIR /tickets-booking/
+
+COPY . .
+
+WORKDIR /tickets-booking/libs
+
+RUN go mod download
+
+WORKDIR /tickets-booking/gen
+
+COPY ./gen .
+
+RUN go mod download
+
+WORKDIR /tickets-booking/services/auth
+
+RUN go mod download
+
+RUN go build -o ./cmd/app/app ./cmd/app/main.go
+
+FROM alpine:3.20
+
+WORKDIR /tickets-booking
+
+COPY --from=builder /tickets-booking /tickets-booking/
