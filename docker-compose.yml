@@ -3,20 +3,43 @@ networks:
 
 services:
   redis:
-    image: redis:latest
+    image: redis:7.4-alpine3.20
     ports:
       - 6379:6379
     networks:
       - dev
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 1s
+      timeout: 3s
+      retries: 5
 
   postgres:
-    image: postgres:latest
+    image: postgres:16-alpine3.20
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mypass
       - POSTGRES_DB=auth_service_db
+    networks:
+      - dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  migrations:
+    image: migrate/migrate
+    entrypoint: ["migrate", "-path", "/migrations", "-database", "postgres://postgres:mypass@postgres:5432/auth_service_db?sslmode=disable", "up"]
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - dev
 
@@ -30,8 +53,11 @@ services:
     networks:
       - dev
     depends_on:
-      - redis
-      - postgres
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+        
 
   gateway:
     build: 
@@ -44,3 +70,6 @@ services:
       - dev
     depends_on:
       - auth
+
+volumes:
+  db-data:

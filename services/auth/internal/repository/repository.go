@@ -17,8 +17,8 @@ func New(db interfaces.DB) interfaces.Repository {
 
 func (repo *postgresRepo) CreateUser(user entities.User) (int, error) {
 	query := `INSERT INTO users
-	(name,email,password,is_consultant)
-	VALUES (:name,:email,:password,:is_consultant)
+	(name,email,password)
+	VALUES (:name,:email,:password)
 	RETURNING id`
 	id := -1
 	rows, err := repo.db.NamedQuery(query, user)

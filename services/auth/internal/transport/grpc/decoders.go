@@ -11,10 +11,9 @@ func decodeRegisterRequest(_ context.Context, request interface{}) (interface{},
 	req := request.(*authpb.RegisterRequest)
 	return models.RegisterRequest{
 		User: entities.User{
-			Name:         req.Name,
-			Email:        req.Email,
-			Password:     req.Password,
-			IsConsultant: req.IsConsultant,
+			Name:     req.Name,
+			Email:    req.Email,
+			Password: req.Password,
 		},
 	}, nil
 }

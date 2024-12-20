@@ -11,12 +11,11 @@ import (
 )
 
 var expected = entities.User{
-	Id:           1,
-	Name:         "test",
-	Email:        "test@testmail.com",
-	Password:     "123",
-	IsConsultant: false,
-	CreatedAt:    time.Now(),
+	Id:        1,
+	Name:      "test",
+	Email:     "test@testmail.com",
+	Password:  "123",
+	CreatedAt: time.Now(),
 }
 
 func TestRegister(t *testing.T) {

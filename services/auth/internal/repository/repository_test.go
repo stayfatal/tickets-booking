@@ -20,10 +20,9 @@ func TestCreateUser(t *testing.T) {
 	repo := New(tx)
 
 	expected := entities.User{
-		Name:         "test",
-		Email:        fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
-		Password:     "123",
-		IsConsultant: false,
+		Name:     "test",
+		Email:    fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
+		Password: "123",
 	}
 
 	id, err := repo.CreateUser(expected)
@@ -50,13 +49,12 @@ func TestGetUserByEmail(t *testing.T) {
 	repo := New(tx)
 
 	expected := entities.User{
-		Name:         "test",
-		Email:        fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
-		Password:     "123",
-		IsConsultant: false,
+		Name:     "test",
+		Email:    fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
+		Password: "123",
 	}
 
-	_, err = tx.Exec("INSERT INTO users (name,email,password,is_consultant) VALUES ($1,$2,$3,$4)", expected.Name, expected.Email, expected.Password, expected.IsConsultant)
+	_, err = tx.Exec("INSERT INTO users (name,email,password) VALUES ($1,$2,$3)", expected.Name, expected.Email, expected.Password)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -10,7 +10,6 @@ func encodeRegisterResponse(_ context.Context, response interface{}) (interface{
 	resp := response.(models.RegisterResponse)
 	return &authpb.RegisterResponse{
 		Token: resp.Token,
-		Error: resp.Error,
 	}, nil
 }
 
@@ -18,6 +17,5 @@ func encodeLoginResponse(_ context.Context, response interface{}) (interface{}, 
 	resp := response.(models.LoginResponse)
 	return &authpb.LoginResponse{
 		Token: resp.Token,
-		Error: resp.Error,
 	}, nil
 }

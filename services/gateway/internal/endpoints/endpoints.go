@@ -4,6 +4,7 @@ import (
 	"booking/services/gateway/internal/interfaces"
 	"booking/services/gateway/internal/models"
 	"context"
+	"errors"
 
 	"github.com/go-kit/kit/endpoint"
 )
@@ -22,14 +23,20 @@ func MakeEndpoints(svc interfaces.Service) *Endpoints {
 
 func makeRegisterEndpoint(svc interfaces.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(models.RegistrationRequest)
+		req, ok := request.(models.RegistrationRequest)
+		if !ok {
+			return nil, errors.New("type assertion error")
+		}
 		return svc.Register(req.User)
 	}
 }
 
 func makeLoginEndpoint(svc interfaces.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(models.LoginRequest)
+		req, ok := request.(models.LoginRequest)
+		if !ok {
+			return nil, errors.New("type assertion error")
+		}
 		return svc.Login(req.User)
 	}
 }

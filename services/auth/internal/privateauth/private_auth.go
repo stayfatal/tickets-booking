@@ -15,15 +15,14 @@ import (
 
 func CreateToken(user entities.User) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, publicauth.Claims{
-		Id:           user.Id,
-		Email:        user.Email,
-		IsConsultant: user.IsConsultant,
+		Id:    user.Id,
+		Email: user.Email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
 		},
 	})
 
-	path, err := utils.GetPath("services/auth/config/private_key.pem")
+	path, err := utils.GetPath("services/auth/internal/privateauth/private_key.pem")
 	if err != nil {
 		return "", errors.Wrap(err, "getting private_key path")
 	}

@@ -23,10 +23,9 @@ func TestRegisterAndLogin(t *testing.T) {
 	}
 
 	expected := entities.User{
-		Name:         "test",
-		Email:        fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
-		Password:     "123",
-		IsConsultant: false,
+		Name:     "test",
+		Email:    fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
+		Password: "123",
 	}
 
 	regResp, err := svc.Register(expected)
@@ -35,8 +34,6 @@ func TestRegisterAndLogin(t *testing.T) {
 	}
 
 	assert.NotNil(t, regResp)
-
-	assert.Equal(t, regResp.Error, "")
 
 	regClaims, err := publicauth.ValidateToken(regResp.Token)
 	if err != nil {
@@ -52,8 +49,6 @@ func TestRegisterAndLogin(t *testing.T) {
 	}
 
 	assert.NotNil(t, loginResp)
-
-	assert.Equal(t, loginResp.Error, "")
 
 	loginClaims, err := publicauth.ValidateToken(loginResp.Token)
 	if err != nil {

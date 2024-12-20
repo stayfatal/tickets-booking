@@ -13,12 +13,10 @@ message RegisterRequest{
     string name = 1;
     string email = 2;
     string password = 3;
-    bool is_consultant = 4;
 }
 
 message RegisterResponse{
     string token = 1;
-    string error = 2;
 }
 
 message LoginRequest{
@@ -28,6 +26,5 @@ message LoginRequest{
 
 message LoginResponse{
     string token = 1;
-    string error = 2;
 }
 

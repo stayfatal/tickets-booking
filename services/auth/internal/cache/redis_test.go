@@ -23,10 +23,9 @@ func TestSetUser(t *testing.T) {
 	cache := New(db)
 
 	expected := entities.User{
-		Name:         "test",
-		Email:        fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
-		Password:     "123",
-		IsConsultant: false,
+		Name:     "test",
+		Email:    fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
+		Password: "123",
 	}
 
 	err = cache.SetUser(expected)
@@ -57,10 +56,9 @@ func TestGetUser(t *testing.T) {
 	cache := New(db)
 
 	expected := entities.User{
-		Name:         "test",
-		Email:        fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
-		Password:     "123",
-		IsConsultant: false,
+		Name:     "test",
+		Email:    fmt.Sprintf("test%s@gmail.com", uuid.New().String()),
+		Password: "123",
 	}
 
 	binary, err := json.Marshal(expected)

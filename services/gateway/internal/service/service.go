@@ -32,10 +32,9 @@ func New(cfg *config.Config) (interfaces.Service, error) {
 
 func (s *service) Register(user entities.User) (*authpb.RegisterResponse, error) {
 	return s.authSvc.Register(context.Background(), &authpb.RegisterRequest{
-		Name:         user.Name,
-		Email:        user.Email,
-		Password:     user.Password,
-		IsConsultant: user.IsConsultant,
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: user.Password,
 	})
 }
 
