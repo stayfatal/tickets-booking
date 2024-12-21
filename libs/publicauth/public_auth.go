@@ -27,7 +27,7 @@ func ValidateToken(token string) (*Claims, error) {
 			return nil, errors.Wrap(UnknownSignMethodError, "checking sign method")
 		}
 
-		path, err := utils.GetPath("internal/publicauth/public_key.pem")
+		path, err := utils.GetPath("libs/publicauth/public_key.pem")
 		if err != nil {
 			return "", errors.Wrap(err, "getting public_key.pem path")
 		}

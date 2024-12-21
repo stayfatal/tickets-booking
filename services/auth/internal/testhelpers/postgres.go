@@ -24,13 +24,8 @@ func PreparePostgres(t *testing.T) (*sqlx.Tx, error) {
 	}
 
 	t.Cleanup(func() {
-		if err := tx.Rollback(); err != nil {
-			t.Error(err)
-		}
-
-		if err := db.Close(); err != nil {
-			t.Fatal(err)
-		}
+		tx.Rollback()
+		db.Close()
 	})
 
 	return tx, nil

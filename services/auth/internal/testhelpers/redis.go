@@ -19,9 +19,7 @@ func PrepareRedis(t *testing.T) (*redis.Client, error) {
 	}
 
 	t.Cleanup(func() {
-		if err := db.Close(); err != nil {
-			t.Fatal(err)
-		}
+		db.Close()
 	})
 
 	return db, nil

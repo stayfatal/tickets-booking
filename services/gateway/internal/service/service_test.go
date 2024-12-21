@@ -55,6 +55,6 @@ func TestRegisterAndLogin(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	assert.NotNil(t, regClaims)
+	assert.NotNil(t, loginClaims)
 	assert.Equal(t, expected.Email, loginClaims.Email)
 }

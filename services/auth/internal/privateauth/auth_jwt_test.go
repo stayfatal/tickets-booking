@@ -21,7 +21,7 @@ func TestCreatingAndValidatingToken(t *testing.T) {
 
 	claims, err := publicauth.ValidateToken(token)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	assert.NotNil(t, claims)

@@ -29,8 +29,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    volumes:
-      - db-data:/var/lib/postgresql/data
 
   migrations:
     image: migrate/migrate
@@ -69,5 +67,12 @@ services:
     depends_on:
       - auth
 
-volumes:
-  db-data:
+  test:
+    build:
+      context: .
+      target: test
+    networks:
+      - dev
+    depends_on:
+      - auth
+      - gateway
