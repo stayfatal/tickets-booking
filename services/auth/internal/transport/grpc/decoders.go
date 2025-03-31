@@ -1,10 +1,10 @@
 package transport
 
 import (
-	"booking/gen/authpb"
-	"booking/libs/entities"
-	"booking/services/auth/internal/models"
 	"context"
+	"ticketsbooking/gen/authpb"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/auth/internal/models"
 )
 
 func decodeRegisterRequest(_ context.Context, request interface{}) (interface{}, error) {

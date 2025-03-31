@@ -1,10 +1,10 @@
 package endpoints
 
 import (
-	"booking/services/gateway/internal/interfaces"
-	"booking/services/gateway/internal/models"
 	"context"
 	"errors"
+	"ticketsbooking/services/gateway/internal/interfaces"
+	"ticketsbooking/services/gateway/internal/models"
 
 	"github.com/go-kit/kit/endpoint"
 )

@@ -1,4 +1,4 @@
-module booking
+module ticketsbooking
 
 go 1.22
 

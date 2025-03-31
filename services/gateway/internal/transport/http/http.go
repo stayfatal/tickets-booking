@@ -1,13 +1,13 @@
 package transport
 
 import (
-	"booking/libs/log"
-	"booking/libs/middlewares"
-	"booking/services/gateway/internal/endpoints"
-	"booking/services/gateway/internal/interfaces"
 	"context"
 	"fmt"
 	"net/http"
+	"ticketsbooking/libs/log"
+	"ticketsbooking/libs/middlewares"
+	"ticketsbooking/services/gateway/internal/endpoints"
+	"ticketsbooking/services/gateway/internal/interfaces"
 
 	"github.com/go-kit/kit/transport"
 	kithttp "github.com/go-kit/kit/transport/http"

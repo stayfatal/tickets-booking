@@ -1,9 +1,9 @@
 package endpoints
 
 import (
-	"booking/services/auth/internal/interfaces"
-	"booking/services/auth/internal/models"
 	"context"
+	"ticketsbooking/services/auth/internal/interfaces"
+	"ticketsbooking/services/auth/internal/models"
 
 	"github.com/go-kit/kit/endpoint"
 )
@@ -23,11 +23,11 @@ func MakeEndpoints(svc interfaces.Service) *Endpoints {
 func makeRegisterEndpoint(svc interfaces.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(models.RegisterRequest)
-		token, err := svc.Register(req.User)
+		err = svc.Register(req.User)
 		if err != nil {
 			return models.RegisterResponse{Error: err.Error()}, err
 		}
-		return models.RegisterResponse{Token: token}, err
+		return models.RegisterResponse{}, err
 	}
 }
 

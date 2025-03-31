@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"booking/libs/log"
+	"ticketsbooking/libs/log"
 
 	"github.com/go-kit/kit/endpoint"
 )

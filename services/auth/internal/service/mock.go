@@ -1,7 +1,7 @@
 package service
 
 import (
-	"booking/libs/entities"
+	"ticketsbooking/libs/entities"
 
 	"github.com/redis/go-redis/v9"
 	"golang.org/x/crypto/bcrypt"
@@ -12,13 +12,13 @@ type repositoryMock struct {
 	expected entities.User
 }
 
-func (repo *repositoryMock) CreateUser(user entities.User) (int, error) {
+func (repo *repositoryMock) CreateUser(user entities.User) error {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(repo.expected.Password))
 	if err != nil {
-		return -1, err
+		return err
 	}
 	repo.counter++
-	return repo.expected.Id, nil
+	return nil
 }
 
 func (repo *repositoryMock) GetUserByEmail(user entities.User) (entities.User, error) {

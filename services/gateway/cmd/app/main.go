@@ -1,21 +1,21 @@
 package main
 
 import (
-	"booking/libs/log"
-	"booking/services/gateway/config"
-	"booking/services/gateway/internal/service"
-	transport "booking/services/gateway/internal/transport/http"
 	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+	"ticketsbooking/libs/config"
+	"ticketsbooking/libs/log"
+	"ticketsbooking/services/gateway/internal/service"
+	transport "ticketsbooking/services/gateway/internal/transport/http"
 )
 
 func main() {
 	logger := log.New()
 
-	cfg, err := config.LoadConfig()
+	cfg, err := config.LoadConfigs()
 	if err != nil {
 		logger.Fatal().Err(err).Msg("")
 	}
@@ -30,8 +30,8 @@ func main() {
 
 	quit := make(chan struct{})
 	go func() {
-		logger.Info().Msgf("Server is now listening on port: %s", cfg.Server.Port)
-		if err := http.ListenAndServe(fmt.Sprintf(":%s", cfg.Server.Port), srv); err != nil {
+		logger.Info().Msgf("Server is now listening on port: %s", cfg.Gateway.Port)
+		if err := http.ListenAndServe(fmt.Sprintf(":%s", cfg.Gateway.Port), srv); err != nil {
 			logger.Error().Err(err).Msg("")
 			quit <- struct{}{}
 		}

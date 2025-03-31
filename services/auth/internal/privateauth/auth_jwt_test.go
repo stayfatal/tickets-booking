@@ -1,9 +1,9 @@
 package privateauth
 
 import (
-	"booking/libs/entities"
-	"booking/libs/publicauth"
 	"testing"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/libs/publicauth"
 
 	"github.com/stretchr/testify/assert"
 )

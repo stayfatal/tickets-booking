@@ -5,25 +5,48 @@ WORKDIR /tickets-booking
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . .
+COPY ./gen ./gen
 
-WORKDIR /tickets-booking/services/auth
-RUN go build -o ./cmd/app/app ./cmd/app/main.go
+COPY ./libs ./libs
 
-WORKDIR /tickets-booking/services/gateway
-RUN go build -o ./cmd/app/app ./cmd/app/main.go
+FROM builder AS auth_builder
+
+WORKDIR /tickets-booking
+
+COPY ./services/auth ./services/auth
+
+RUN go build -o app ./services/auth/cmd/app/main.go
 
 FROM alpine:3.20 AS auth
+
 WORKDIR /tickets-booking
-COPY --from=builder /tickets-booking /tickets-booking
-CMD ["/tickets-booking/services/auth/cmd/app/app"]
+
+COPY --from=auth_builder /tickets-booking /tickets-booking
+
+CMD ["./app"]
+
+FROM builder AS gateway_builder
+
+WORKDIR /tickets-booking
+
+COPY ./services/gateway ./services/gateway
+
+RUN go build -o app ./services/gateway/cmd/app/main.go
 
 FROM alpine:3.20 AS gateway
-WORKDIR /tickets-booking
-COPY --from=builder /tickets-booking /tickets-booking
-CMD ["/tickets-booking/services/gateway/cmd/app/app"]
 
-FROM golang:1.22-alpine3.20 AS test
 WORKDIR /tickets-booking
-COPY . .
+
+COPY --from=gateway_builder /tickets-booking /tickets-booking
+
+CMD ["./app"]
+
+FROM builder AS test
+
+WORKDIR /tickets-booking
+
+COPY ./services/auth ./services/auth
+
+COPY ./services/gateway ./services/gateway
+
 CMD ["go", "test", "-v", "./..."]

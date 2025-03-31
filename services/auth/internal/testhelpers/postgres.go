@@ -1,19 +1,14 @@
 package testhelpers
 
 import (
-	"booking/services/auth/config"
 	"testing"
+	"ticketsbooking/libs/config"
 
 	"github.com/jmoiron/sqlx"
 )
 
 func PreparePostgres(t *testing.T) (*sqlx.Tx, error) {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	db, err := config.NewPostgresDb(cfg)
+	db, err := config.NewPostgresDB()
 	if err != nil {
 		return nil, err
 	}

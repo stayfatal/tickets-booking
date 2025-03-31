@@ -1,9 +1,9 @@
 package service
 
 import (
-	"booking/libs/entities"
-	"booking/libs/publicauth"
 	"testing"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/libs/publicauth"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -24,19 +24,10 @@ func TestRegister(t *testing.T) {
 
 	svc := New(repo, cache)
 
-	token, err := svc.Register(expected)
+	err := svc.Register(expected)
 	if err != nil {
 		t.Fatal(err)
 	}
-
-	claims, err := publicauth.ValidateToken(token)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	assert.Equal(t, expected.Id, claims.Id)
-	assert.Equal(t, expected.Email, claims.Email)
-
 	assert.Equal(t, 1, cache.counter)
 	assert.Equal(t, 1, repo.counter)
 }

@@ -1,12 +1,12 @@
 package service
 
 import (
-	"booking/gen/authpb"
-	"booking/libs/entities"
-	"booking/services/gateway/config"
-	"booking/services/gateway/internal/interfaces"
 	"context"
 	"fmt"
+	"ticketsbooking/gen/authpb"
+	"ticketsbooking/libs/config"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/gateway/internal/interfaces"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -17,10 +17,10 @@ type service struct {
 	authSvc authpb.AuthenticationClient
 }
 
-func New(cfg *config.Config) (interfaces.Service, error) {
+func New(cfg *config.ServicesConfig) (interfaces.Service, error) {
 	conns := []*grpc.ClientConn{}
 
-	clientConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", cfg.Services["auth"].Host, cfg.Services["auth"].Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	clientConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", cfg.Auth.Host, cfg.Auth.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, err
 	}

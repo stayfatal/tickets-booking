@@ -1,25 +1,14 @@
 package middlewares
 
 import (
-	"booking/libs/log"
 	"context"
 	"errors"
-	"net/http"
+	"ticketsbooking/libs/log"
 	"time"
 
 	"github.com/go-kit/kit/endpoint"
 	"google.golang.org/grpc"
 )
-
-type statusRecorder struct {
-	http.ResponseWriter
-	status int
-}
-
-func (rec *statusRecorder) WriteHeader(code int) {
-	rec.status = code
-	rec.ResponseWriter.WriteHeader(code)
-}
 
 func GrpcLogger(logger *log.Logger) endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {

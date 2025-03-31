@@ -1,13 +1,12 @@
 package models
 
-import "booking/libs/entities"
+import "ticketsbooking/libs/entities"
 
 type RegistrationRequest struct {
 	User entities.User
 }
 
 type RegistrationResponse struct {
-	Token string
 	Error string
 }
 

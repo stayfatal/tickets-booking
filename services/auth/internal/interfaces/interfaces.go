@@ -1,23 +1,23 @@
 package interfaces
 
 import (
-	"booking/libs/entities"
 	"database/sql"
+	"ticketsbooking/libs/entities"
 
 	"github.com/jmoiron/sqlx"
 )
 
 type Service interface {
-	Register(user entities.User) (string, error)
+	Register(user entities.User) error
 	Login(user entities.User) (string, error)
 }
 
 type Repository interface {
-	CreateUser(user entities.User) (int, error)
+	CreateUser(user entities.User) error
 	GetUserByEmail(user entities.User) (entities.User, error)
 }
 
-type DB interface {
+type QueryExecutor interface {
 	Exec(query string, args ...any) (sql.Result, error)
 	Get(dest interface{}, query string, args ...interface{}) error
 	NamedExec(query string, arg interface{}) (sql.Result, error)

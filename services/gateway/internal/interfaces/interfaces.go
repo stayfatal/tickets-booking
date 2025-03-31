@@ -1,8 +1,8 @@
 package interfaces
 
 import (
-	"booking/gen/authpb"
-	"booking/libs/entities"
+	"ticketsbooking/gen/authpb"
+	"ticketsbooking/libs/entities"
 )
 
 type Service interface {

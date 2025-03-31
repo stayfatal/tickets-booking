@@ -1,19 +1,14 @@
 package testhelpers
 
 import (
-	"booking/services/auth/config"
 	"testing"
+	"ticketsbooking/libs/config"
 
 	"github.com/redis/go-redis/v9"
 )
 
 func PrepareRedis(t *testing.T) (*redis.Client, error) {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return nil, err
-	}
-
-	db, err := config.NewRedisDb(cfg)
+	db, err := config.NewRedisDB()
 	if err != nil {
 		return nil, err
 	}

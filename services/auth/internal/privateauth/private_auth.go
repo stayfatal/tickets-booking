@@ -1,9 +1,9 @@
 package privateauth
 
 import (
-	"booking/libs/entities"
-	"booking/libs/publicauth"
-	"booking/libs/utils"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/libs/publicauth"
+	"ticketsbooking/libs/utils"
 
 	"io"
 	"os"

@@ -7,16 +7,35 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Create .env file
+      run: |
+        echo "AUTH_HOST=auth" >> .env
+        echo "AUTH_PORT=8020" >> .env
+        echo "GATEWAY_HOST=gateway" >> .env
+        echo "GATEWAY_PORT=8030" >> .env
+        echo "BOOKING_HOST=booking" >> .env
+        echo "BOOKING_PORT=8040" >> .env
+        echo "POSTGRES_USER=postgres" >> .env
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+        echo "POSTGRES_DB=tickets-booking" >> .env
+        echo "POSTGRES_HOST=postgres" >> .env
+        echo "POSTGRES_PORT=5432" >> .env
+        echo "POSTGRES_SSL_MODE=disable" >> .env
+        echo "REDIS_HOST=redis" >> .env
+        echo "REDIS_PORT=6379" >> .env
+        echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+
     - name: Run docker with tests
-      run: docker compose -f docker-compose.test.yml up postgres redis migrations -d && docker compose -f docker-compose.test.yml up auth gateway test --exit-code-from test
+      run: |
+        docker compose -f docker-compose.test.yml up postgres redis migrations -d
+        docker compose -f docker-compose.test.yml up auth gateway test --exit-code-from test
 
     - name: Clean up
       run: docker compose -f docker-compose.test.yml down -v

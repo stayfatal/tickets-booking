@@ -1,10 +1,10 @@
 package cache
 
 import (
-	"booking/libs/entities"
-	"booking/services/auth/internal/interfaces"
 	"context"
 	"encoding/json"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/auth/internal/interfaces"
 	"time"
 
 	"github.com/pkg/errors"

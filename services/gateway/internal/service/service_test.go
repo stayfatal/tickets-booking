@@ -1,18 +1,18 @@
 package service
 
 import (
-	"booking/libs/entities"
-	"booking/libs/publicauth"
-	"booking/services/gateway/config"
 	"fmt"
 	"testing"
+	"ticketsbooking/libs/config"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/libs/publicauth"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRegisterAndLogin(t *testing.T) {
-	cfg, err := config.LoadConfig()
+	cfg, err := config.LoadConfigs()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,14 +34,6 @@ func TestRegisterAndLogin(t *testing.T) {
 	}
 
 	assert.NotNil(t, regResp)
-
-	regClaims, err := publicauth.ValidateToken(regResp.Token)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	assert.NotNil(t, regClaims)
-	assert.Equal(t, expected.Email, regClaims.Email)
 
 	loginResp, err := svc.Login(expected)
 	if err != nil {

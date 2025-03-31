@@ -1,12 +1,12 @@
 package cache
 
 import (
-	"booking/libs/entities"
-	"booking/services/auth/internal/testhelpers"
 	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/auth/internal/testhelpers"
 	"time"
 
 	"github.com/google/uuid"

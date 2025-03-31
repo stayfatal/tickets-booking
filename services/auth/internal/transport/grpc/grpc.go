@@ -1,12 +1,12 @@
 package transport
 
 import (
-	"booking/gen/authpb"
-	"booking/libs/log"
-	"booking/libs/middlewares"
-	"booking/services/auth/internal/endpoints"
-	"booking/services/auth/internal/interfaces"
 	"context"
+	"ticketsbooking/gen/authpb"
+	"ticketsbooking/libs/log"
+	"ticketsbooking/libs/middlewares"
+	"ticketsbooking/services/auth/internal/endpoints"
+	"ticketsbooking/services/auth/internal/interfaces"
 
 	"github.com/go-kit/kit/transport"
 	kitgrpc "github.com/go-kit/kit/transport/grpc"

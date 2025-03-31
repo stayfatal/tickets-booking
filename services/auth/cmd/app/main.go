@@ -1,18 +1,19 @@
 package main
 
 import (
-	"booking/gen/authpb"
-	"booking/libs/log"
-	"booking/services/auth/config"
-	"booking/services/auth/internal/cache"
-	"booking/services/auth/internal/repository"
-	"booking/services/auth/internal/service"
-	transport "booking/services/auth/internal/transport/grpc"
 	"fmt"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"ticketsbooking/gen/authpb"
+	"ticketsbooking/libs/config"
+	"ticketsbooking/libs/log"
+	"ticketsbooking/services/auth/internal/cache"
+	"ticketsbooking/services/auth/internal/repository"
+	"ticketsbooking/services/auth/internal/service"
+	transport "ticketsbooking/services/auth/internal/transport/grpc"
 
 	"google.golang.org/grpc"
 )
@@ -20,18 +21,18 @@ import (
 func main() {
 	log := log.New()
 
-	cfg, err := config.LoadConfig()
+	cfg, err := config.LoadConfigs()
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed loading cfg")
 	}
 
-	db, err := config.NewPostgresDb(cfg)
+	db, err := config.NewPostgresDB()
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed opening db")
 	}
 	defer db.Close()
 
-	cacheDB, err := config.NewRedisDb(cfg)
+	cacheDB, err := config.NewRedisDB()
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed opening cache db")
 	}
@@ -44,7 +45,7 @@ func main() {
 
 	authServer := transport.NewGRPCServer(svc, log)
 
-	l, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.Server.Port))
+	l, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.Auth.Port))
 	if err != nil {
 		log.Fatal().Err(err).Msg("failed starting listener")
 	}
@@ -56,7 +57,7 @@ func main() {
 
 	exit := make(chan struct{})
 	go func() {
-		log.Info().Msgf("Server is now listening on port: %s", cfg.Server.Port)
+		log.Info().Msgf("Server is now listening on port: %s", cfg.Auth.Port)
 		if err := srv.Serve(l); err != nil {
 			log.Error().Err(err).Msg("")
 			exit <- struct{}{}

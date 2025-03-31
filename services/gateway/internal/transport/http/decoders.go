@@ -1,10 +1,10 @@
 package transport
 
 import (
-	"booking/services/gateway/internal/models"
 	"context"
 	"encoding/json"
 	"net/http"
+	"ticketsbooking/services/gateway/internal/models"
 )
 
 func decodeRegisterRequest(_ context.Context, r *http.Request) (interface{}, error) {

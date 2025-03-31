@@ -1,9 +1,9 @@
 package service
 
 import (
-	"booking/libs/entities"
-	"booking/services/auth/internal/interfaces"
-	"booking/services/auth/internal/privateauth"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/auth/internal/interfaces"
+	"ticketsbooking/services/auth/internal/privateauth"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -20,30 +20,20 @@ func New(repo interfaces.Repository, cache interfaces.CacheDB) interfaces.Servic
 	return &service{repo: repo, cache: cache}
 }
 
-func (svc *service) Register(user entities.User) (string, error) {
+func (svc *service) Register(user entities.User) error {
 	hashedPass, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return "", errors.Wrap(err, "generating hashed password")
+		return errors.Wrap(err, "generating hashed password")
 	}
 	user.Password = string(hashedPass)
 
-	id, err := svc.repo.CreateUser(user)
+	err = svc.repo.CreateUser(user)
 	if err != nil {
-		return "", err
+		return err
 	}
-	user.Id = id
 
 	err = svc.cache.SetUser(user)
-	if err != nil {
-		return "", err
-	}
-
-	token, err := privateauth.CreateToken(user)
-	if err != nil {
-		return "", err
-	}
-
-	return token, nil
+	return err
 }
 
 func (svc *service) Login(user entities.User) (string, error) {

@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"booking/libs/entities"
-	"booking/services/auth/internal/testhelpers"
 	"fmt"
 	"testing"
+	"ticketsbooking/libs/entities"
+	"ticketsbooking/services/auth/internal/testhelpers"
 
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
@@ -25,14 +25,14 @@ func TestCreateUser(t *testing.T) {
 		Password: "123",
 	}
 
-	id, err := repo.CreateUser(expected)
+	err = repo.CreateUser(expected)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	got := entities.User{}
 
-	err = tx.Get(&got, "SELECT * FROM users WHERE id = $1", id)
+	err = tx.Get(&got, "SELECT * FROM users WHERE email = $1", expected.Email)
 	if err != nil {
 		t.Fatal(err)
 	}

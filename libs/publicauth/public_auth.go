@@ -1,9 +1,9 @@
 package publicauth
 
 import (
-	"booking/libs/utils"
 	"io"
 	"os"
+	"ticketsbooking/libs/utils"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pkg/errors"
